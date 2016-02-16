@@ -8,6 +8,7 @@
 
 namespace App\Api\Controllers;
 
+use App\Api\Requests\FastAuthRequest;
 use App\Api\Requests\LoginRequest;
 use App\Api\Requests\RegisterRequest;
 use App\Register;
@@ -23,17 +24,26 @@ class AuthController extends BaseController
 {
     /**
      * @param Request $request
+     * 普通登录和涉及第三方登录
      */
     public function authenticate(LoginRequest $request)
     {
         // grab credentials from the request
         if($request->input('phone')&&$request->input('password')) {
             $credentials = $request->only( 'password', 'phone');
+        }elseif($request->input('open_id') && $request->input('auth_name')){
+            $credentials = [
+                $request->input('auth_name')=>$request->input('open_id'),
+            ];
         }else{
             $credentials = $request->only('email', 'password');
         }
-
         try {
+            // third auth to verify and login and create a token
+            if($request->input('open_id') && $request->input('auth_name') && !$request->input('phone')){
+                $user=User::where($credentials)->first();
+                $token=JWTAuth::fromUser($user);
+            }else
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
                 return $this->response->error('认证失败', 401);
@@ -54,6 +64,7 @@ class AuthController extends BaseController
     /**
      * @param RegisterRequest $request
      * @return mixed
+     * 普通注册
      */
     public function register(RegisterRequest $request){
         $newUser=[
@@ -68,7 +79,46 @@ class AuthController extends BaseController
     }
 
     /**
+     * @param FastAuthRequest $request
+     * 第三方登录快速注册
+     */
+    public function authRegister(FastAuthRequest $request){
+        $is_exist=User::where($request->input('auth_name'),"=",$request->input('open_id'))->count();
+        if($is_exist){
+            return $this->response->error("该第三方账号已被绑定",409);
+        }
+        $newUser = [
+            'name' => $request->input('name') . "_" . strtoupper(str_random(11)),
+            $request->input('auth_name') => $request->input('open_id'),
+        ];
+        if($request->input('poster')) {
+            $newUser=array_merge($newUser,['poster' => $request->input('poster')]);
+        }
+        $user=User::create($newUser);
+        $token=JWTAuth::fromUser($user);
+
+        return $this->response->array(['token'=>$token,'user_id'=>$user['id']]);
+    }
+
+    /**
+     * @param $openId
+     * @param Request $request
+     * 验证是否为有效的第三方登录
+     */
+    public function verifyAuth($openId,Request $request){
+        $thirdAuth=explode(",",env(THIRD_AUTH));
+        if(!in_array($request->input('name'),$thirdAuth)){
+            return $this->response->error("参数错误",401);
+        }
+        $thirdName=$request->input('name')."_login";
+        $exist=User::where($thirdName,"=",$openId)->first();
+        $result['is_exist']=$exist?1:0;
+        return $this->response->array($result);
+    }
+
+    /**
      * @return \Illuminate\Http\JsonResponse
+     * 通过token获取用户信息
      */
     public function getAuthenticatedUser()
     {
@@ -98,6 +148,7 @@ class AuthController extends BaseController
 
     /**
      * @param $phone
+     * 发送验证码
      */
     public function show($phone){
         //验证手机号

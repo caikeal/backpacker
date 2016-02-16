@@ -21,6 +21,10 @@ $api->version(['v1','v2'],function($api){
         $api->post('register','AuthController@register');
         //登录
         $api->post('login','AuthController@authenticate');
+        //验证第三方授权是否存在
+        $api->get('verifyauth/{openId}','AuthController@verifyAuth');
+        //第三方授权快速注册
+        $api->post('fastauth','AuthController@authRegister');
     });
 });
 $api->version('v1', function ($api) {

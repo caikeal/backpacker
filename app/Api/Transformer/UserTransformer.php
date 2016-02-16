@@ -21,6 +21,8 @@ class UserTransformer extends TransformerAbstract
             'phone'=>$user['phone'],
             'email'=>$user['email'],
             'poster'=>$user['poster'],
+            'qq'=>$user['qq'],
+            'wechat'=>$user['wechat'],
             'created_at'=>$user['created_at']->toDateTimeString(),
             'updated_at'=>$user['updated_at']->toDateTimeString(),
         ];
