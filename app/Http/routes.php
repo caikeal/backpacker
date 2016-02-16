@@ -23,13 +23,12 @@ $api->version(['v1','v2'],function($api){
         $api->post('login','AuthController@authenticate');
     });
 });
-//$api->version('v1', function ($api) {
-//    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1'],function($api){});
-//    //获取验证码
-//    $api->get('register/{phone}', 'App\Api\v1\RegisterController@show');
-//    $api->get('user/{id}', 'App\Api\v1\UserController@show');
-//});
-//
+$api->version('v1', function ($api) {
+    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1','middleware'=>['version','api','jwt.auth']],function($api){
+        $api->resource('user','UserController');
+    });
+});
+
 //$api->version('v2',function($api){
 //    // 更新用户 token
 ////    $api->get('upToken', 'App\Http\Controllers\Api\V1\AuthenticateController@upToken');

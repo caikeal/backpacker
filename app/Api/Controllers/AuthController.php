@@ -44,9 +44,10 @@ class AuthController extends BaseController
         }
 
         // all good so return the token
-        $result['status_code']=0;
         $result['token']=$token;
         $result['created_at']=Carbon::now()->toDateTimeString();
+        $user=JWTAuth::setToken($token)->authenticate();
+        $result=array_merge($result,$user->toArray());
         return $this->response->array($result);
     }
 
@@ -63,7 +64,7 @@ class AuthController extends BaseController
         $user=User::create($newUser);
         $token=JWTAuth::fromUser($user);
 
-        return $this->response->array(['token'=>$token,'status_code'=>0]);
+        return $this->response->array(['token'=>$token,'user_id'=>$user['id']]);
     }
 
     /**
@@ -122,9 +123,8 @@ class AuthController extends BaseController
         $register->created_time=time();
         $register->save();
 
-        $result['status_code']=0;
         $result['sms']=$register->sms;
         $result['expire_time']=$register->created_time+30*60;
-        return $this->response->array($result)->withHeader('X-Api-Version',env('API_VERSION'));
+        return $this->response->array($result);
     }
 }
