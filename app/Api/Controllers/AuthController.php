@@ -42,7 +42,11 @@ class AuthController extends BaseController
             // third auth to verify and login and create a token
             if($request->input('open_id') && $request->input('auth_name') && !$request->input('phone')){
                 $user=User::where($credentials)->first();
-                $token=JWTAuth::fromUser($user);
+                if($user) {
+                    $token = JWTAuth::fromUser($user);
+                }else{
+                    return $this->response->error("认证失败",401);
+                }
             }else
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -164,6 +168,7 @@ class AuthController extends BaseController
         /*
          * 发送验证码方法
          */
+        //todo get sms
         $sms="123456";
         /*
          * 将验证码保存
