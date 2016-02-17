@@ -21,15 +21,25 @@ $api->version(['v1','v2'],function($api){
         $api->post('register','AuthController@register');
         //登录
         $api->post('login','AuthController@authenticate');
+        //验证第三方授权是否存在
+        $api->get('verifyauth/{openId}','AuthController@verifyAuth');
+        //第三方授权快速注册
+        $api->post('fastauth','AuthController@authRegister');
     });
 });
-//$api->version('v1', function ($api) {
-//    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1'],function($api){});
-//    //获取验证码
-//    $api->get('register/{phone}', 'App\Api\v1\RegisterController@show');
-//    $api->get('user/{id}', 'App\Api\v1\UserController@show');
-//});
-//
+$api->version('v1', function ($api) {
+    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1','middleware'=>['version','api','jwt.auth']],function($api){
+        $api->resource('user','UserController');
+        //七牛上传token请求
+        $api->get('file/token/{id}','FileTokenController@show');
+    });
+
+    //回调请求地址
+    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1'],function($api){
+        $api->post('file/info','FileInfoController@store');
+    });
+});
+
 //$api->version('v2',function($api){
 //    // 更新用户 token
 ////    $api->get('upToken', 'App\Http\Controllers\Api\V1\AuthenticateController@upToken');

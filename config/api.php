@@ -175,7 +175,9 @@ return [
     */
 
     'throttling' => [
-
+        function ($app) {
+            return new Dingo\Api\Http\RateLimit\Throttle\Authenticated;
+        }
     ],
 
     /*
