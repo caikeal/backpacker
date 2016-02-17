@@ -30,6 +30,13 @@ $api->version(['v1','v2'],function($api){
 $api->version('v1', function ($api) {
     $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1','middleware'=>['version','api','jwt.auth']],function($api){
         $api->resource('user','UserController');
+        //七牛上传token请求
+        $api->get('file/token/{id}','FileTokenController@show');
+    });
+
+    //回调请求地址
+    $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1'],function($api){
+        $api->post('file/info','FileInfoController@store');
     });
 });
 

@@ -80,6 +80,18 @@ return [
             'url_type'  => 'publicURL',
         ],
 
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => env('QINIU_IP','7xqxb2.com2.z0.glb.qiniucdn.com'), //你的七牛域名
+                'https'     => 'dn-yourdomain.qbox.me',         //你的HTTPS域名
+                'custom'    => 'static.abc.com',                //你的自定义域名
+            ],
+            'access_key'=> env('QINIU_AK','rcem2JlAQ9bCCvBy-v-MzJMsqWJKQoHaRL2I-xoJ'),  //AccessKey
+            'secret_key'=> env('QINIU_SK','XlbmfE_Nmri36K36HKJZ1XKrigZD0zaf09hPvymL'),  //SecretKey
+            'bucket'    => env('QINIU_BUCKET','sharponline'),  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
     ],
 
 ];
