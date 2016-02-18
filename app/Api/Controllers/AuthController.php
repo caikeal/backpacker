@@ -101,7 +101,7 @@ class AuthController extends BaseController
         $user=User::create($newUser);
         $token=JWTAuth::fromUser($user);
 
-        return $this->response->array(['token'=>$token,'user_id'=>$user['id']]);
+        return $this->response->array(['token'=>$token,'user_id'=>$user['id'],'name'=>$user['name']]);
     }
 
     /**
@@ -111,11 +111,11 @@ class AuthController extends BaseController
      */
     public function verifyAuth($openId,Request $request){
         $thirdAuth=explode(",",env(THIRD_AUTH));
-        if(!in_array($request->input('name'),$thirdAuth)){
+        if(!in_array($request->input('auth_name'),$thirdAuth)){
             return $this->response->error("参数错误",401);
         }
-        $thirdName=$request->input('name')."_login";
-        $exist=User::where($thirdName,"=",$openId)->first();
+        $thirdName=$request->input('auth_name');
+        $exist=User::where($thirdName,"=",$openId)->count();
         $result['is_exist']=$exist?1:0;
         return $this->response->array($result);
     }
