@@ -110,7 +110,7 @@ class AuthController extends BaseController
      * 验证是否为有效的第三方登录
      */
     public function verifyAuth($openId,Request $request){
-        $thirdAuth=explode(",",env(THIRD_AUTH));
+        $thirdAuth=explode(",",env('THIRD_AUTH'));
         if(!in_array($request->input('auth_name'),$thirdAuth)){
             return $this->response->error("参数错误",401);
         }
