@@ -45,7 +45,7 @@ class AuthController extends BaseController
                 if($user) {
                     $token = JWTAuth::fromUser($user);
                 }else{
-                    return $this->response->error("认证失败",200);
+                    return $this->response->error("认证失败",401);
                 }
             }else
             // attempt to verify the credentials and create a token for the user
