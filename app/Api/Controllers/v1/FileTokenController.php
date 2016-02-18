@@ -21,6 +21,6 @@ class FileTokenController extends BaseController
             'callbackBody' => '{"fname":"$(fname)", "fkey":"$(key)", "desc":"$(x:desc)", "uid":' . $id . ',"name":"user_poster"}'
         );
         $token=$disk->uploadToken(time().".jpg",$policy);
-        return $this->response->array(compact($token));
+        return $this->response->array(['token'=>$token]);
     }
 }
