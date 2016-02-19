@@ -14,14 +14,17 @@ use zgldh\QiniuStorage\QiniuStorage;
 
 class FileTokenController extends BaseController
 {
-    public function show($id){
+    public function show($id,Request $request){
         $disk=QiniuStorage::disk('qiniu');
 
-        $policy=array(
-            'callbackUrl' => url('api/v1/file/info'),
-            'callbackBody' => '{"fname":"$(fname)", "fkey":"$(key)", "desc":"$(x:desc)", "uid":' . $id . ',"name":"user_poster"}'
-        );
-        $key="poster/".str_random(2).time().$id.".jpg";
+        //随拍视频上传t=1
+        if($request->input('t')==1) {
+            $policy = array(
+                'callbackUrl' => url('api/v1/file/info'),
+                'callbackBody' => '{"fname":"$(fname)", "fkey":"$(key)", "desc":"$(x:desc)", "uid":' . $id . ',"t":"1"}'
+            );
+            $key = "random_shoot/" . str_random(2) . time() . $id;
+        }
         $token=$disk->uploadToken($key,$policy);
         return $this->response->array(['upToken'=>$token,'k'=>$key]);
     }
