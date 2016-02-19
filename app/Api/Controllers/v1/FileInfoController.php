@@ -11,10 +11,12 @@ namespace App\Api\Controllers\v1;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use App\Api\Controllers\BaseController;
+use Log;
 
 class FileInfoController extends BaseController
 {
     public function store(Request $request){
+        Log::info(json_encode($request->all()));
         if($request->input('name')=='user_poster'){
             User::where("id","=",$request->input("uid"))->update(['poster'=>$request->input("fname")]);
         }
