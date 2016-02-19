@@ -16,11 +16,12 @@ class FileTokenController extends BaseController
 {
     public function show($id){
         $disk=QiniuStorage::disk('qiniu');
+
         $policy=array(
             'callbackUrl' => url('api/v1/file/info'),
             'callbackBody' => '{"fname":"$(fname)", "fkey":"$(key)", "desc":"$(x:desc)", "uid":' . $id . ',"name":"user_poster"}'
         );
-        $key=str_random(2).time().$id.".jpg";
+        $key="poster/".str_random(2).time().$id.".jpg";
         $token=$disk->uploadToken($key,$policy);
         return $this->response->array(['upToken'=>$token,'k'=>$key]);
     }
