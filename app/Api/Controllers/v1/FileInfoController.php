@@ -17,16 +17,18 @@ use Log;
 class FileInfoController extends BaseController
 {
     public function store(Request $request){
-        Log::info($request->all());
-        Log::info($request->input("uid"));
-        $user_id=$request->input("uid");
-        $src=env('QINIU_IP')."/".$request->input("fkey");
-        $name=$request->input("fname");
-        if($request->input("desc")){
-            $desc=$request->input("desc");
+        $content=$request->getContent();
+        Log::info($content);
+        $fileAll=[];
+        $fileAll=json_decode($content,true);
+        $user_id=$fileAll["uid"];
+        $src=env('QINIU_IP')."/".$fileAll["fkey"];
+        $name=$fileAll["fname"];
+        if($fileAll["desc"]){
+            $desc=$fileAll["desc"];
         }
         //t=1随拍视频
-        if($request->input('t')==1){
+        if($fileAll['t']==1){
             $video=new Video();
             $video->user_id=$user_id;
             $video->src=$src;
