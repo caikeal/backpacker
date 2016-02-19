@@ -17,7 +17,8 @@ use Log;
 class FileInfoController extends BaseController
 {
     public function store(Request $request){
-//        Log::info(json_encode($request->all()));
+        Log::info($request->all());
+        Log::info($request->input("uid"));
         $user_id=$request->input("uid");
         $src=env('QINIU_IP')."/".$request->input("fkey");
         $name=$request->input("fname");
