@@ -24,6 +24,7 @@ class FileInfoController extends BaseController
         $user_id=$fileAll["uid"];
         $src=env('QINIU_IP')."/".$fileAll["fkey"];
         $name=$fileAll["fname"];
+        $desc="";
         if($fileAll["desc"]){
             $desc=$fileAll["desc"];
         }
@@ -32,7 +33,9 @@ class FileInfoController extends BaseController
             $video=new Video();
             $video->user_id=$user_id;
             $video->src=$src;
-            $video->desc=$desc?$desc:"";
+            if($desc) {
+                $video->desc = $desc ? $desc : "";
+            }
             $video->name=$name;
             $video->save();
             $resp = array('ret' => 'success');
