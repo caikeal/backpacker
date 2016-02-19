@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->rememberToken();
             $table->string('poster');
-            $table->string('qq');
-            $table->string('wechat');
+            $table->string('qq')->index();
+            $table->string('weixin')->index();
+            $table->string('sina')->index();
             $table->timestamps();
         });
     }
