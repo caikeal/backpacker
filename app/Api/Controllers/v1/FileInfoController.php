@@ -18,11 +18,10 @@ class FileInfoController extends BaseController
 {
     public function store(Request $request){
         $content=$request->getContent();
-        Log::info($content);
         $fileAll=[];
         $fileAll=json_decode($content,true);
         $user_id=$fileAll["uid"];
-        $src=env('QINIU_IP')."/".$fileAll["fkey"];
+        $src="http://".env('QINIU_IP')."/".$fileAll["fkey"];
         $name=$fileAll["fname"];
         $desc="";
         if($fileAll["desc"]){
