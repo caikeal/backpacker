@@ -19,11 +19,14 @@ class FileTokenController extends BaseController
 
         //随拍视频上传t=1
         if($request->input('t')==1) {
+            if(in_array($request->input('mt'),['mp4','avi','ogg','flv']))
             $policy = array(
                 'callbackUrl' => url('api/v1/file/info'),
                 'callbackBody' => '{"fname":"$(fname)", "fkey":"$(key)", "desc":"$(x:desc)", "uid":' . $id . ',"t":"1"}'
             );
-            $key = "random_shoot/" . str_random(2) . time() . $id;
+            $key = "random_shoot/" . str_random(2) . time() . $id.$request->input('mt');
+        }else{
+            return $this->response->error("缺少参数",422);
         }
         $token=$disk->uploadToken($key,$policy);
         return $this->response->array(['upToken'=>$token,'k'=>$key]);
