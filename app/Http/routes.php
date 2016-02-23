@@ -34,21 +34,13 @@ $api->version('v1', function ($api) {
         $api->get('file/token/{id}','FileTokenController@show');
     });
 
-    //回调请求地址
     $api->group(['namespace'=>'App\Api\Controllers\v1','prefix'=>'v1'],function($api){
+        //回调请求地址
         $api->post('file/info','FileInfoController@store');
+
+        $api->resource('video','VideoController');
     });
 });
-
-//$api->version('v2',function($api){
-//    // 更新用户 token
-////    $api->get('upToken', 'App\Http\Controllers\Api\V1\AuthenticateController@upToken');
-//    // 【用户】
-//    // 获取当前用户信息
-//    $api->get('me', 'App\Http\Controllers\Api\V1\UserController@me');
-//    // 修改当前用户信息
-//    $api->post('me', 'App\Http\Controllers\Api\V1\UserController@up');
-//});
 
 Route::get('/', function () {
     return view('welcome');
