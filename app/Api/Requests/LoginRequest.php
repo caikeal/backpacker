@@ -8,8 +8,7 @@
 
 namespace App\Api\Requests;
 
-
-use Dingo\Api\Http\FormRequest;
+use App\Api\FormRequest;
 
 class LoginRequest extends FormRequest
 {
