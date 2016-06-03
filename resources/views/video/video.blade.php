@@ -248,6 +248,45 @@
                 alert("网络错误！");
             });
         },
+        ready: function(){
+            var pull = 0;
+            var _this = this;
+            var scrollEvent = $(window).scroll(function () {
+                var scrollTop = $(window).scrollTop();
+                var wrapperHeight = $(document).height();
+                var windowHeight = $(window).height();
+                var url = _this.pageInfo.links.next;
+
+                if(windowHeight + scrollTop + 20 >= wrapperHeight && pull === 0 && url){
+                    //锁定请求
+                    pull = 1;
+                    //获取接口数据
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        headers: {
+                            'X-Api-Version': 1
+                        },
+                        method: 'GET'
+                    }).done(function (msg) {
+                        if (msg.data.length){
+                            for(var i = 0; i < msg.data.length; i++){
+                                _this.commentList.push(msg.data[i]);
+                            }
+                            _this.pageInfo = msg.meta.pagination;
+                        }else{
+                            alert("已无更多内容！");
+                        }
+                        pull = 0;
+                        return false;
+                    }).fail(function (error) {
+                        alert("网络错误！");
+                        pull = 0;
+                        return false;
+                    });
+                }
+            });
+        },
         methods: {
             toggleShow: function (e) {
                 if (this.show) {
