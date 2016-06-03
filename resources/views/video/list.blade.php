@@ -114,7 +114,7 @@
                 var windowHeight = $(window).height();
                 var url = _this.pageInfo.links.next;
 
-                if(windowHeight + scrollTop + 20 >= wrapperHeight && pull === 0 && url){
+                if(windowHeight + scrollTop + 300 >= wrapperHeight && pull === 0 && url){
                     //锁定请求
                     pull = 1;
                     //获取接口数据
