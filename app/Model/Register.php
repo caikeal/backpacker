@@ -1,18 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Register extends Model
 {
-    protected $table = 'video';
+    protected $table = 'register';
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'src', 'desc','name',
+        'phone', 'sms', 'created_time',
     ];
 }

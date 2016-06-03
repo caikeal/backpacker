@@ -8,8 +8,8 @@
 
 namespace App\Api\Controllers\v1;
 
-use App\User;
-use App\Video;
+use App\Model\User;
+use App\Model\Video;
 use Illuminate\Http\Request;
 use App\Api\Controllers\BaseController;
 use Log;

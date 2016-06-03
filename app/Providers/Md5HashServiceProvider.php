@@ -8,7 +8,7 @@
 
 namespace App\Providers;
 
-use App\Md5Hasher;
+use App\Helper\Md5Hasher;
 use Illuminate\Hashing\HashServiceProvider;
 
 class Md5HashServiceProvider extends HashServiceProvider

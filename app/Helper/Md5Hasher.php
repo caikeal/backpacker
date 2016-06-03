@@ -6,7 +6,7 @@
  * Time: 0:42
  */
 
-namespace App;
+namespace App\Helper;
 
 use RuntimeException;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
