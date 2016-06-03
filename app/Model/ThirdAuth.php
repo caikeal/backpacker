@@ -1,19 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Register extends Model
+class ThirdAuth extends Model
 {
-    protected $table = 'register';
-    public $timestamps = false;
+    protected $table = 'third_auth';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'phone', 'sms', 'created_time',
+        'user_id', 'oauth_name', 'oauth_id', 'oauth_access_token', 'oauth_expires'
     ];
 }

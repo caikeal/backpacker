@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "96efbae33caa2bf05b2028fe9fa57bca",
+    "hash": "bd6e6db50613a8f27b865c0cf8b9951b",
     "content-hash": "da7bb71b9cf99bc017e491d46f169e12",
     "packages": [
         {
@@ -67,12 +67,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dingo/api.git",
-                "reference": "b36db17c7294e44e6ce7039952ca8f8d57caab37"
+                "reference": "fb22a2489d380d153c8d67056ce0461129a72dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/dingo/api/b36db17c7294e44e6ce7039952ca8f8d57caab37.zip",
-                "reference": "b36db17c7294e44e6ce7039952ca8f8d57caab37",
+                "url": "http://packagist.phpcomposer.com/files/dingo/api/fb22a2489d380d153c8d67056ce0461129a72dcb.zip",
+                "reference": "fb22a2489d380d153c8d67056ce0461129a72dcb",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
                 "laravel",
                 "restful"
             ],
-            "time": "2015-12-23 08:26:24"
+            "time": "2016-02-08 01:26:45"
         },
         {
             "name": "dingo/blueprint",

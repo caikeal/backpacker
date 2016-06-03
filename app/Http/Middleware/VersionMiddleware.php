@@ -14,7 +14,7 @@ class VersionMiddleware
     public function handle($request, Closure $next)
     {
         if(!$request->header('X-Api-Version')) {
-            $err = ["message" => "头信息有误", "status_code" => 406,];
+            $err = ["message" => "头信息有误", "status_code" => 406, "errors" => ["invalid" => "头信息有误"]];
             return response()->json($err)->setStatusCode(406);
         }
         return $next($request);
