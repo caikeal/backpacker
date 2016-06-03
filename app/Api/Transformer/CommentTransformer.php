@@ -28,7 +28,7 @@ class CommentTransformer extends TransformerAbstract
         return[
             'id' => $person['id'],
             'name' => $person['name'],
-            'poster' => $person['poster']
+            'poster' => $person['poster'] ? $person['poster'] : '../dist/imgs/Hello.png',
         ];
     }
 
