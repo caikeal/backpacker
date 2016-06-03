@@ -13,8 +13,10 @@ use App\Api\Controllers\BaseController;
 use App\Api\Requests\CommentRequest;
 use App\Api\Transformer\CommentTransformer;
 use App\Model\Comment;
+use App\Model\Video;
 use Backpacker\Services\CommentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CommentController extends BaseController
@@ -87,17 +89,26 @@ class CommentController extends BaseController
             $is_master = 0;
         }
 
-        $newCom = new Comment();
-        $newCom->video_id = $video_id;
-        $newCom->content = $content;
-        $newCom->receive_id = $receive_id;
-        $newCom->receiver = $receiver;
-        $newCom->comment_id = $comment_id;
-        $newCom->publish_id = $publish_id;
-        $newCom->publisher = $publisher;
-        $newCom->is_master = $is_master;
-        $newCom->save();
+        DB::beginTransaction();
+        try{
+            $newCom = new Comment();
+            $newCom->video_id = $video_id;
+            $newCom->content = $content;
+            $newCom->receive_id = $receive_id;
+            $newCom->receiver = $receiver;
+            $newCom->comment_id = $comment_id;
+            $newCom->publish_id = $publish_id;
+            $newCom->publisher = $publisher;
+            $newCom->is_master = $is_master;
+            $newCom->save();
 
-        return $this->response->item($newCom, new CommentTransformer());
+            Video::where('id',$video_id)->increment('comment_num',1);
+
+            DB::commit();
+            return $this->response->item($newCom, new CommentTransformer());
+        }catch (\Exception $e) {
+            DB::rollBack();
+            return $this->response->errorInternal("保存失败！");
+        }
     }
 }
