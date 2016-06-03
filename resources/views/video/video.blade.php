@@ -26,7 +26,7 @@
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <meta name="apple-mobile-web-app-title" content="来自{{ $video['publisher']['name'] }}的视频"/>
     <link rel="apple-touch-icon-precomposed" href="../dist/icons/72.png">
 
     <link rel="stylesheet" href="../dist/css/normalize.css">
