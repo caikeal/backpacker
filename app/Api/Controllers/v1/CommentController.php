@@ -46,9 +46,12 @@ class CommentController extends BaseController
             'subComments.poster'
         ])->where('video_id', $video_id)
             ->where('comment_id', 0)
-            ->orderBy('created_at')
+            ->orderBy('created_at','desc')
             ->paginate(15);
 
+        //使分页的搜索保持条件
+        $commentList->appends(['vid' => $video_id]);
+        
         foreach ($commentList as $k=>$v){
             $subNum = 0;
             $subNum = Comment::where("comment_id", $v['id'])->count();
