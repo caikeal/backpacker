@@ -100,7 +100,7 @@
                             <i class="iconfont icon-report report"></i>
                             </span>
                         </div>
-                        <div class="main-reply" v-if="comment.sub_comments.length?1:0">
+                        <div class="main-reply" v-if="comment.sub_comments.length?1:0" @click="changeToDetail(comment.id)">
                             <ul>
                                 <li class="reply-list" v-for="subComment in comment.sub_comments" v-cloak>
                                     <a href="#">@{{ subComment.poster.name ? subComment.poster.name : subComment.publisher }}</a>&nbsp;:&nbsp;
