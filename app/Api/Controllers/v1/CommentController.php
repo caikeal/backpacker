@@ -51,13 +51,22 @@ class CommentController extends BaseController
 
         //使分页的搜索保持条件
         $commentList->appends(['vid' => $video_id]);
-        
+
         foreach ($commentList as $k=>$v){
             $subNum = 0;
             $subNum = Comment::where("comment_id", $v['id'])->count();
             $commentList[$k]['subNum'] = $subNum;
         }
         
+        return $this->response->paginator($commentList, new CommentTransformer());
+    }
+
+    public function show($id)
+    {
+        //获取视频评论列表信息
+        $commentList = Comment::with(['replier', 'poster'])->where('comment_id', $id)
+            ->paginate(15);
+//        dd($commentList->toArray());
         return $this->response->paginator($commentList, new CommentTransformer());
     }
 
