@@ -176,7 +176,7 @@
             $(window).scroll(function(){
                 //监听显示回复框
                 var scrollTop = $(window).scrollTop();
-                if (scrollTop>beforeScroll) {
+                if (scrollTop>beforeScroll && !$("[name=answer]").is(":focus")) {
                     if (_this.replyBar != false) {
                         _this.replyBar = false;
                     }
