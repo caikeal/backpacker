@@ -105,7 +105,7 @@
                                 <li class="reply-list" v-for="subComment in comment.sub_comments" v-cloak>
                                     <a href="#">@{{ subComment.poster.name ? subComment.poster.name : subComment.publisher }}</a>&nbsp;:&nbsp;
                                     <ul class="tag-list">
-                                        <li class="tag" v-if="subComment.publish_id==comment.publish_id">楼主</li>
+                                        <li class="tag" v-if="subComment.is_master">楼主</li>
                                     </ul>
                                     <span class="at-replier">
                                         回复&nbsp;<span>@{{ subComment.replier.name ? subComment.replier.name : subComment.receiver}}</span>&nbsp;:
