@@ -225,18 +225,25 @@
 	top: 0px;
 	display: table-cell;
 }
-
 /* .fade-enter 定义进入的开始状态 */
 .fade-enter {
 	top: 227px;
 	opacity: 1;
 }
-
 /* .fade-leave 定义离开的结束状态 */
 .fade-leave {
 	top: 227px;
 	opacity: 0;
 }
+
+.appear-transition {
+	transition: all .3s ease;
+	opacity: 1;
+}
+.appear-enter, .appear-leave {
+	opacity: 0;
+}
+
 .answer {
 	width: 100%;
 	padding-left: 3%;

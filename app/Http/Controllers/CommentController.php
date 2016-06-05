@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,7 +49,8 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $comment = Comment::with(['poster'])->findOrFail($id);
+        return view('comment.comment', ['comment'=> $comment]);
     }
 
     /**
