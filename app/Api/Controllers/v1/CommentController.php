@@ -80,7 +80,11 @@ class CommentController extends BaseController
         $comment_id = $request->input('comment_id');
 
         if ($token){
-            $user=JWTAuth::setToken($token)->authenticate();
+            try{
+                $user = JWTAuth::setToken($token)->authenticate();
+            }catch (\Exception $e){
+                $user = [];
+            }
         }else{
             $user = [];
         }
