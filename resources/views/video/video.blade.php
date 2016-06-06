@@ -319,9 +319,13 @@
                     return false;
                 }
                 var _this = this;
-
+                var searchParams = window.location.search;
+                var url = '../api/v1/comment';
+                if (searchParams){
+                    url = url +  searchParams
+                }
                 $.ajax({
-                    url: '../api/v1/comment',
+                    url: url,
                     dataType: 'json',
                     headers: {
                         'X-Api-Version': 1
