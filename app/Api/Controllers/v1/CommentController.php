@@ -40,7 +40,7 @@ class CommentController extends BaseController
             'replier',
             'poster',
             'subComments' => function($query){
-                $query->take(5);
+                $query->whereRaw("5 > (select count(*) from comments b where b.comment_id = comments.comment_id and b.id < comments.id)");
             },
             'subComments.replier',
             'subComments.poster'
