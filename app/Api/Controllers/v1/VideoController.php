@@ -26,9 +26,13 @@ class VideoController extends  BaseController
      *
      * Get a JSON representation of all the videos.
      *
-     * @Get('/')
-     * @Version({'v1'})
-     * @return \Dingo\Api\Http\Response
+     * @Get("/{?page}")
+     * @Version({"v1"})
+     * @Request(headers={"X-Api-Version":"v1"})
+     * @Parameters({
+     *     @Parameter("page", description="The page of results to view.", default=1),
+     * })
+     * @Response(200, body={"data":[{"id":1, "name":"foo"},{"id":1, "name":"bar"}]})
      */
     public function index(){
         //获取视频信息（视频发布者，观看人数，评论人数，视频首页图片）
@@ -42,11 +46,8 @@ class VideoController extends  BaseController
      *
      * Get a JSON representation of a video.
      *
-     * @Get('/$id')
-     * @Version({'v1'})
-     *
-     * @param $id
-     * @return \Dingo\Api\Http\Response
+     * @Get("/{/id}")
+     * @Version({"v1"})
      */
     public function show($id){
         $video=Video::with(['publisher'])->find($id);
