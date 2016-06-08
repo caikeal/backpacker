@@ -29,6 +29,7 @@ class UserController extends BaseController
     }
 
     /**
+     * @Get("/{id}")
      * @Request("username=foo&password=bar", contentType="application/x-www-form-urlencoded")
      * @return \Dingo\Api\Http\Response
      */

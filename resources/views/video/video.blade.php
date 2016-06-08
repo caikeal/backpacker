@@ -93,7 +93,7 @@
                         <div class="main-content" @click="changeToDetail(comment.id)">@{{ comment.content }}</div>
                         <div class="main-control">
                             <span class="main-time">@{{ comment.from_now }}</span>
-                            <a href="../comment/@{{ comment.id }}" class="reply-ctrl">
+                            <a href="#" @click.prevent="changeToDetail(comment.id)" class="reply-ctrl">
                                 <i class="iconfont icon-huifu reply"></i>
                             </a>
                             <span class="report-ctrl" @click="report(1)">
@@ -368,8 +368,12 @@
             },
 
             changeToDetail: function (id) {
-                console.log(id);
-                window.location.href="../comment/"+id;
+                var searchParams = window.location.search;
+                var url = "../comment/"+id;
+                if (searchParams){
+                    url = url +  searchParams
+                }
+                window.location.href = url;
             }
         }
     });
