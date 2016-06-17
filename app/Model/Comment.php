@@ -69,7 +69,7 @@ class Comment extends Model
     {
         Carbon::setLocale('zh');
         if (Carbon::now() >= Carbon::parse($this->attributes['created_at'])->addDays(10)){
-            return Carbon::parse($this->attributes['created_at']);
+            return Carbon::parse($this->attributes['created_at'])->toDateTimeString();
         }
 
         return Carbon::parse($this->attributes['created_at'])->diffForHumans();
