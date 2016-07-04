@@ -23,7 +23,7 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 class AuthController extends BaseController
 {
     /**
-     * @param Request $request
+     * @param LoginRequest $request
      * 普通登录和涉及第三方登录
      */
     public function authenticate(LoginRequest $request)
